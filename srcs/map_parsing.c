@@ -6,7 +6,7 @@
 /*   By: malmeida <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/01 13:47:33 by malmeida          #+#    #+#             */
-/*   Updated: 2021/10/09 17:29:15 by malmeida         ###   ########.fr       */
+/*   Updated: 2021/10/09 18:06:20 by malmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,13 @@ int	get_map_length(char *filename)
 
 	fd = open(filename, O_RDONLY);
 	j = 0;
-	i = 0;
 	while (get_next_line(&str, fd))
 	{
-		while (str
+		i = 0;
+		while (str[i])
+			i++;
+		if (i > j)
+			j = i;		
 	}
 	close(fd);
 	return (j);
