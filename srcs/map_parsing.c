@@ -6,13 +6,13 @@
 /*   By: malmeida <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/01 13:47:33 by malmeida          #+#    #+#             */
-/*   Updated: 2021/10/08 13:23:54 by malmeida         ###   ########.fr       */
+/*   Updated: 2021/10/09 17:29:15 by malmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
 
-int	get_map_size(char *filename)
+int	get_map_height(char *filename)
 {
 	int		fd;
 	int		size;
@@ -24,6 +24,24 @@ int	get_map_size(char *filename)
 		size++;
 	close(fd);
 	return (size);
+}
+
+int	get_map_length(char *filename)
+{
+	int		fd;
+	int		i;
+	int		j;
+	char	*str;
+
+	fd = open(filename, O_RDONLY);
+	j = 0;
+	i = 0;
+	while (get_next_line(&str, fd))
+	{
+		while (str
+	}
+	close(fd);
+	return (j);
 }
 
 void	map_parser(char *filename, char ***map)
