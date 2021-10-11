@@ -6,7 +6,7 @@
 /*   By: malmeida <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/01 13:54:21 by malmeida          #+#    #+#             */
-/*   Updated: 2021/10/09 17:29:14 by malmeida         ###   ########.fr       */
+/*   Updated: 2021/10/11 13:09:54 by malmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,26 @@
 
 #define BUFFER_SIZE 1
 
+typedef	struct	s_assets {
+	void		*floor;
+	void		*wall;
+	void		*exit;
+	char		*floor_path;
+	char		*wall_path;
+	char		*exit_path;
+}				t_assets;
+
 typedef	struct	s_mlx {
-		void	*mlx;
-		void	*mlx_win;
-		void	*floor;
-		void	*wall;
-		char	*floor_path;
-		char	*wall_path;
-		int		width;
-		int		height;
+	void		*mlx;
+	void		*mlx_win;
 }				t_mlx;
+
+typedef	struct	s_game {
+	t_mlx		mlx;
+	t_assets	assets;
+}				t_game;
+
+
 
 		/*	Get Next line */
 int		get_next_line(char **line, int fd);
