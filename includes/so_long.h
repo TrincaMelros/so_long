@@ -6,7 +6,7 @@
 /*   By: malmeida <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/01 13:54:21 by malmeida          #+#    #+#             */
-/*   Updated: 2021/10/11 15:22:09 by malmeida         ###   ########.fr       */
+/*   Updated: 2021/10/11 17:07:38 by malmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ typedef	struct	s_game {
 	t_assets	assets;
 }				t_game;
 
-
+void	map_printer(char **map);
 
 		/*	Get Next line */
 int		get_next_line(char **line, int fd);
@@ -58,5 +58,8 @@ void	free_map(char ***map);
 
 		/* Map and Image Loading */
 void	map_loading(t_game *game, char **map, int i, int j);
+
+		/* Map Validation */
+int		map_validation(char **map, int i, int j);
 
 #endif
