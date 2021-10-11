@@ -6,7 +6,7 @@
 /*   By: malmeida <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/01 13:54:21 by malmeida          #+#    #+#             */
-/*   Updated: 2021/10/11 13:09:54 by malmeida         ###   ########.fr       */
+/*   Updated: 2021/10/11 15:22:09 by malmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,11 @@ typedef	struct	s_assets {
 	void		*floor;
 	void		*wall;
 	void		*exit;
-	char		*floor_path;
-	char		*wall_path;
-	char		*exit_path;
+	void		*collectible;
+	void		*player_front;
+	void		*player_back;
+	void		*player_left;
+	void		*player_right;
 }				t_assets;
 
 typedef	struct	s_mlx {
@@ -47,13 +49,14 @@ typedef	struct	s_game {
 
 		/*	Get Next line */
 int		get_next_line(char **line, int fd);
-void	*ft__calloc(size_t nmemb, size_t size);
 
 		/* Map Parsing */
 int		get_map_height(char *filename);
 int		get_map_length(char *filename);
 void	map_parser(char *filename, char ***map);
-void	matrix_printer(char **matrix);
 void	free_map(char ***map);
+
+		/* Map and Image Loading */
+void	map_loading(t_game *game, char **map, int i, int j);
 
 #endif

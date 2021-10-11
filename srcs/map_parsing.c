@@ -6,7 +6,7 @@
 /*   By: malmeida <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/01 13:47:33 by malmeida          #+#    #+#             */
-/*   Updated: 2021/10/09 18:06:20 by malmeida         ###   ########.fr       */
+/*   Updated: 2021/10/11 15:22:07 by malmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	get_map_length(char *filename)
 		while (str[i])
 			i++;
 		if (i > j)
-			j = i;		
+			j = i;
 	}
 	close(fd);
 	return (j);
@@ -61,25 +61,6 @@ void	map_parser(char *filename, char ***map)
 		j++;
 	}
 	close(fd);
-}
-
-void	matrix_printer(char **matrix)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (matrix[i])
-	{
-		j = 0;
-		while (matrix[i][j])
-		{
-			printf("%c", matrix[i][j]);
-			j++;
-		}
-		printf("\n");
-		i++;
-	}
 }
 
 void	free_map(char ***map)

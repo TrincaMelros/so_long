@@ -6,13 +6,13 @@
 /*   By: malmeida <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 12:40:14 by malmeida          #+#    #+#             */
-/*   Updated: 2021/10/08 12:42:13 by malmeida         ###   ########.fr       */
+/*   Updated: 2021/10/11 14:45:49 by malmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
 
-void	*ft__calloc(size_t nmemb, size_t size)
+static void	*ft__calloc(size_t nmemb, size_t size)
 {
 	void			*ptr;
 	unsigned char	*s;
@@ -62,7 +62,7 @@ static int	returnado(int rd, char **line, char **saved, char **temp)
 	return (1);
 }
 
-int			get_next_line(char **line, int fd)
+int	get_next_line(char **line, int fd)
 {
 	char		buff[BUFFER_SIZE + 1];
 	char		*temp;
@@ -73,8 +73,11 @@ int			get_next_line(char **line, int fd)
 		return (-1);
 	if (!saved[fd])
 		saved[fd] = ft__calloc(1, 1);
-	while ((rd = read(fd, buff, BUFFER_SIZE)) > 0)
+	while (1)
 	{
+		rd = read(fd, buff, BUFFER_SIZE);
+		if (rd <= 0)
+			break ;
 		buff[rd] = '\0';
 		temp = ft_strjoin(saved[fd], buff);
 		freebird((void *)&saved[fd]);
