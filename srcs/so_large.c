@@ -6,11 +6,30 @@
 /*   By: malmeida <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/29 13:15:45 by malmeida          #+#    #+#             */
-/*   Updated: 2021/10/12 15:12:20 by malmeida         ###   ########.fr       */
+/*   Updated: 2021/10/12 16:56:31 by malmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
+
+void	movement(t_game *game)
+{
+
+}
+
+int	exit_game(t_game *game)
+{
+	free_map(&(game->map.matrix));
+	exit (0);
+}
+
+int	key_hook(int keycode, t_game *game)
+{
+	if (keycode == 53)
+		exit_game(game);
+	printf("I like turtles!\n");
+	return (0);
+}
 
 int	main(int argc, char **argv)
 {
@@ -25,6 +44,7 @@ int	main(int argc, char **argv)
 	if (map_validation(game))
 		return (1);
 	map_loading(&game);
+	mlx_hook(game.mlx.mlx_win, 17, (1L << 17), exit_game, &game);
+	mlx_key_hook(game.mlx.mlx_win, key_hook, &game);
 	mlx_loop(game.mlx.mlx);
-	free_map(&(game.map.matrix));
 }

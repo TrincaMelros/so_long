@@ -6,7 +6,7 @@
 /*   By: malmeida <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/01 13:54:21 by malmeida          #+#    #+#             */
-/*   Updated: 2021/10/12 14:55:47 by malmeida         ###   ########.fr       */
+/*   Updated: 2021/10/12 16:56:34 by malmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,17 @@ typedef	struct	s_map {
 	int			length;
 }				t_map;
 
+typedef struct	s_player {
+	int			x;
+	int			y;
+	int			moves;
+}				t_player;
+
 typedef	struct	s_game {
 	t_mlx		mlx;
 	t_assets	assets;
 	t_map		map;
+	t_player	player;
 }				t_game;
 
 void	map_printer(char **map);
