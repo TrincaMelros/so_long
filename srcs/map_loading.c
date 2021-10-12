@@ -1,55 +1,62 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_image_loading.c                                :+:      :+:    :+:   */
+/*   map_loading.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: malmeida <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/11 14:34:45 by malmeida          #+#    #+#             */
-/*   Updated: 2021/10/11 14:41:01 by malmeida         ###   ########.fr       */
+/*   Updated: 2021/10/12 15:05:49 by malmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
 
-static void	load_assets(t_game *game, char **map)
+static void	load_assets(t_game *game)
 {
 	int	i;
 	int	j;
+	int	player_count;
 
+	player_count = 0;
 	i = 0;
-	while (map[i])
+	while (game->map.matrix[i] && i < game->map.height)
 	{
 		j = 0;
-		while (map[i][j])
+		while (game->map.matrix[i][j])
 		{
-			if (map[i][j] == 'E')
+			if (game->map.matrix[i][j] == 'E')
 				mlx_put_image_to_window(game->mlx.mlx, game->mlx.mlx_win, \
 						game->assets.exit, j * 50, i * 50);
-			if (map[i][j] == 'C')
+			if (game->map.matrix[i][j] == 'C')
 				mlx_put_image_to_window(game->mlx.mlx, game->mlx.mlx_win, \
 						game->assets.collectible, j * 50, i * 50);
+			if (game->map.matrix[i][j] == 'P' && player_count == 0)
+				mlx_put_image_to_window(game->mlx.mlx, game->mlx.mlx_win, \
+						game->assets.player_front, j * 50, i * 50);
 			j++;
 		}
 		i++;
 	}
 }
 
-static void	load_wall_floor(t_game *game, char **map)
+static void	load_wall_floor(t_game *game)
 {
 	int	i;
 	int	j;
 
 	i = 0;
-	while (map[i])
+	while (game->map.matrix[i] && i < game->map.height)
 	{
 		j = 0;
-		while (map[i][j])
+		while (game->map.matrix[i][j])
 		{
-			if (map[i][j] == '0' || map[i][j] == 'E' || map[i][j] == 'C')
+			if (game->map.matrix[i][j] == '0' || game->map.matrix[i][j] == 'E' \
+					|| game->map.matrix[i][j] == 'C' \
+					|| game->map.matrix[i][j] == 'P')
 				mlx_put_image_to_window(game->mlx.mlx, game->mlx.mlx_win, \
 						game->assets.floor, j * 50, i * 50);
-			if (map[i][j] == '1')
+			if (game->map.matrix[i][j] == '1')
 				mlx_put_image_to_window(game->mlx.mlx, game->mlx.mlx_win, \
 						game->assets.wall, j * 50, i * 50);
 			j++;
@@ -58,7 +65,7 @@ static void	load_wall_floor(t_game *game, char **map)
 	}
 }
 
-static void	player_assignment(t_game *game, int i, int j)
+static void	player_assignment(t_game *game)
 {
 	int		width;
 	int		height;
@@ -78,14 +85,15 @@ static void	player_assignment(t_game *game, int i, int j)
 			path, &width, &height);
 }
 
-static void	img_assignment(t_game *game, int i, int j)
+static void	img_assignment(t_game *game)
 {
 	int		width;
 	int		height;
 	char	*path;
 
 	game->mlx.mlx = mlx_init();
-	game->mlx.mlx_win = mlx_new_window(game->mlx.mlx, j * 50, i * 50, "Tester");
+	game->mlx.mlx_win = mlx_new_window(game->mlx.mlx, game->map.length * 50, \
+			game->map.height * 50, "Tester");
 	path = "./images/assets/floor.xpm";
 	game->assets.floor = mlx_xpm_file_to_image(game->mlx.mlx, \
 			path, &width, &height);
@@ -100,10 +108,10 @@ static void	img_assignment(t_game *game, int i, int j)
 			path, &width, &height);
 }
 
-void	map_loading(t_game *game, char **map, int i, int j)
+void	map_loading(t_game *game)
 {
-	img_assignment(game, i, j);
-	player_assignment(game, i, j);
-	load_wall_floor(game, map);
-	load_assets(game, map);
+	img_assignment(game);
+	player_assignment(game);
+	load_wall_floor(game);
+	load_assets(game);
 }

@@ -6,7 +6,7 @@
 /*   By: malmeida <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/01 13:54:21 by malmeida          #+#    #+#             */
-/*   Updated: 2021/10/11 17:07:38 by malmeida         ###   ########.fr       */
+/*   Updated: 2021/10/12 14:55:47 by malmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,16 @@ typedef	struct	s_mlx {
 	void		*mlx_win;
 }				t_mlx;
 
+typedef	struct	s_map {
+	char		**matrix;
+	int			height;
+	int			length;
+}				t_map;
+
 typedef	struct	s_game {
 	t_mlx		mlx;
 	t_assets	assets;
+	t_map		map;
 }				t_game;
 
 void	map_printer(char **map);
@@ -57,9 +64,9 @@ void	map_parser(char *filename, char ***map);
 void	free_map(char ***map);
 
 		/* Map and Image Loading */
-void	map_loading(t_game *game, char **map, int i, int j);
+void	map_loading(t_game *game);
 
 		/* Map Validation */
-int		map_validation(char **map, int i, int j);
+int		map_validation(t_game game);
 
 #endif

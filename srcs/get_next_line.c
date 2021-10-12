@@ -6,7 +6,7 @@
 /*   By: malmeida <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 12:40:14 by malmeida          #+#    #+#             */
-/*   Updated: 2021/10/11 17:07:02 by malmeida         ###   ########.fr       */
+/*   Updated: 2021/10/12 15:04:55 by malmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static int	returnado(int rd, char **line, char **saved, char **temp)
 	return (1);
 }
 
-int			get_next_line(char **line, int fd)
+int	get_next_line(char **line, int fd)
 {
 	char		buff[BUFFER_SIZE + 1];
 	char		*temp;

@@ -6,22 +6,22 @@
 /*   By: malmeida <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/11 16:48:55 by malmeida          #+#    #+#             */
-/*   Updated: 2021/10/11 17:09:42 by malmeida         ###   ########.fr       */
+/*   Updated: 2021/10/12 15:04:43 by malmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
 
-static int	is_rectangular(char **map)
+static int	is_rectangular(t_game game)
 {
-	size_t	i;
+	int		i;
 	int		j;
 
-	i = ft_strlen(map[0]);
+	i = ft_strlen(game.map.matrix[0]);
 	j = 1;
-	while (map[j])
+	while (game.map.matrix[j] && j < game.map.height)
 	{
-		if (i != ft_strlen(map[j]))
+		if (i != ft_strlen(game.map.matrix[j]))
 		{
 			return (1);
 		}
@@ -30,7 +30,7 @@ static int	is_rectangular(char **map)
 	return (0);
 }
 
-static int	is_pos_valid(char **map)
+static int	is_pos_valid(t_game game)
 {
 	int	starting_pos;
 	int	i;
@@ -38,12 +38,12 @@ static int	is_pos_valid(char **map)
 
 	starting_pos = 0;
 	i = 0;
-	while (map[i])
+	while (game.map.matrix[i] && i < game.map.height)
 	{
 		j = 0;
-		while (map[i][j])
+		while (game.map.matrix[i][j])
 		{
-			if (map[i][j] == 'P')
+			if (game.map.matrix[i][j] == 'P')
 				starting_pos++;
 			j++;
 		}
@@ -55,7 +55,7 @@ static int	is_pos_valid(char **map)
 		return (1);
 }
 
-static int	is_valid(char **map)
+static int	is_valid(t_game game)
 {
 	int	exit;
 	int	collectible;
@@ -65,14 +65,14 @@ static int	is_valid(char **map)
 	exit = 0;
 	collectible = 0;
 	i = 0;
-	while (map[i])
+	while (game.map.matrix[i] && i < game.map.height)
 	{
 		j = 0;
-		while (map[i][j])
+		while (game.map.matrix[i][j])
 		{
-			if (map[i][j] == 'E')
+			if (game.map.matrix[i][j] == 'E')
 				exit++;
-			if (map[i][j] == 'C')
+			if (game.map.matrix[i][j] == 'C')
 				collectible++;
 			j++;
 		}
@@ -84,49 +84,51 @@ static int	is_valid(char **map)
 		return (1);
 }
 
-static int	is_closed(char **map, int i, int j)
+static int	is_closed(t_game game)
 {
 	int	f;
 	int	z;
 
 	f = 0;
-	while (map[0][f] && map[i - 1][f])
+	while (game.map.matrix[0][f] && game.map.matrix[game.map.height - 1][f])
 	{
-		if (map[0][f] != '1' || map[i - 1][f] != '1')
+		if (game.map.matrix[0][f] != '1' || \
+				game.map.matrix[game.map.height - 1][f] != '1')
 			return (1);
 		f++;
 	}
 	f = 0;
-	while(map[f])
+	while (game.map.matrix[f] && f < game.map.height)
 	{
-		if (map[f][0] != '1' || map[f][j - 1] != '1')
+		if (game.map.matrix[f][0] != '1' || \
+				game.map.matrix[f][game.map.length - 1] != '1')
 			return (1);
 		f++;
 	}
 	return (0);
 }
 
-int	map_validation(char **map, int i, int j)
+int	map_validation(t_game game)
 {
 	int	f;
 
 	f = 0;
-	if (is_rectangular(map))
+	if (is_rectangular(game))
 	{
 		f = 1;
 		ft_putstr_fd("Error\nMap is not rectangular.\n", 1);
 	}
-	else if (is_valid(map))
+	else if (is_valid(game))
 	{
 		f = 1;
 		ft_putstr_fd("Error\nMap has no exit or collectibles.\n", 1);
 	}
-	else if (is_pos_valid(map))
+	else if (is_pos_valid(game))
 	{
 		f = 1;
 		ft_putstr_fd("Error\nMap doesn't have player starting position.\n", 1);
 	}
-	else if (is_closed(map, i, j))
+	else if (is_closed(game))
 	{
 		f = 1;
 		ft_putstr_fd("Error\nMap is not enclosed by walls.\n", 1);
