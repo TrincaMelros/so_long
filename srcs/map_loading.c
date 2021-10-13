@@ -6,7 +6,7 @@
 /*   By: malmeida <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/11 14:34:45 by malmeida          #+#    #+#             */
-/*   Updated: 2021/10/13 16:31:38 by malmeida         ###   ########.fr       */
+/*   Updated: 2021/10/13 21:22:39 by malmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,9 +89,6 @@ static void	img_assignment(t_game *game)
 	int		height;
 	char	*path;
 
-	game->mlx.mlx = mlx_init();
-	game->mlx.mlx_win = mlx_new_window(game->mlx.mlx, game->map.length * 50, \
-			game->map.height * 50, "Tester");
 	path = "./images/assets/floor.xpm";
 	game->assets.floor = mlx_xpm_file_to_image(game->mlx.mlx, \
 			path, &width, &height);
@@ -108,6 +105,9 @@ static void	img_assignment(t_game *game)
 
 void	map_loading(t_game *game)
 {
+	game->mlx.mlx = mlx_init();
+	game->mlx.mlx_win = mlx_new_window(game->mlx.mlx, game->map.length * 50, \
+			game->map.height * 50, "42 Gameroni");
 	img_assignment(game);
 	player_assignment(game);
 	load_wall_floor(game);
