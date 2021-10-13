@@ -6,21 +6,16 @@
 /*   By: malmeida <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 13:24:05 by malmeida          #+#    #+#             */
-/*   Updated: 2021/10/13 14:22:51 by malmeida         ###   ########.fr       */
+/*   Updated: 2021/10/13 16:03:55 by malmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
 
-static void	refresh_square(t_game *game, int yy, int xx)
-{
-		mlx_put_image_to_window(game->mlx.mlx, game->mlx.mlx_win, \
-				game->assets.floor, xx * 50, yy * 50);
-}
-
 static void	place_player(t_game *game, int yy, int xx, char move)
 {
-	refresh_square(game, yy, xx);
+	mlx_put_image_to_window(game->mlx.mlx, game->mlx.mlx_win, \
+				game->assets.floor, xx * 50, yy * 50);
 	if (move == 'W')
 		mlx_put_image_to_window(game->mlx.mlx, game->mlx.mlx_win, \
 				game->assets.player_back, xx * 50, yy * 50);
@@ -30,7 +25,7 @@ static void	place_player(t_game *game, int yy, int xx, char move)
 	if (move == 'A')
 		mlx_put_image_to_window(game->mlx.mlx, game->mlx.mlx_win, \
 				game->assets.player_left, xx * 50, yy * 50);
-	if (move == 'S')
+	if (move == 'D')
 		mlx_put_image_to_window(game->mlx.mlx, game->mlx.mlx_win, \
 				game->assets.player_right, xx * 50, yy * 50);
 }
@@ -45,16 +40,33 @@ static int	is_movement_valid(t_game *game, int new_y, int new_x, char move)
 	if (game->map.matrix[new_y][new_x] == 'E' && game->player.collectibles > 0)
 		i = 1;
 	if (i == 1)
+	{
 		place_player(game, game->player.y, game->player.x, move);
+		game->player.moves++;
+		printf("[\e[0;32mMOVES\e[0m] : %d\n", game->player.moves);
+	}
 	return (i);
+}
+
+static void	end_game(t_game *game, int yy, int xx)
+{
+	mlx_put_image_to_window(game->mlx.mlx, game->mlx.mlx_win, \
+			game->assets.floor, xx * 50, yy * 50);
+	mlx_put_image_to_window(game->mlx.mlx, game->mlx.mlx_win, \
+			game->assets.exit, xx * 50, yy * 50);
+	mlx_put_image_to_window(game->mlx.mlx, game->mlx.mlx_win, \
+			game->assets.player_front, xx * 50, yy * 50);
+	game->player.allow_movement = 0;
 }
 
 static void	movement(t_game *game, int new_y, int new_x, char move)
 {
 	if (is_movement_valid(game, new_y, new_x, move))
 		return ;
-	refresh_square(game, game->player.y, game->player.x);
-	if (game->map.matrix[new_y][new_x] == '0')
+	mlx_put_image_to_window(game->mlx.mlx, game->mlx.mlx_win, \
+				game->assets.floor, game->player.x * 50, game->player.y * 50);
+	if (game->map.matrix[new_y][new_x] == '0' || \
+			game->map.matrix[new_y][new_x] == 'P')
 		place_player(game, new_y, new_x, move);
 	if (game->map.matrix[new_y][new_x] == 'C')
 	{
@@ -63,23 +75,26 @@ static void	movement(t_game *game, int new_y, int new_x, char move)
 		game->player.collectibles--;
 	}
 	if (game->map.matrix[new_y][new_x] == 'E')
-		exit_game(game);
+		end_game(game, new_y, new_x);
 	game->player.y = new_y;
 	game->player.x = new_x;
+	game->player.moves++;
+	printf("[\e[0;32mMOVES\e[0m] : %d\n", game->player.moves);
 }
 
 int	key_hook(int keycode, t_game *game)
 {
-	if (keycode == 53)
+	if (keycode == ESC)
 		exit_game(game);
-	if (keycode == 13)
+	if (game->player.allow_movement == 0)
+		return (0);
+	if (keycode == MOVE_UP)
 		movement(game, game->player.y - 1, game->player.x, 'W');
-	if (keycode == 1)
+	if (keycode == MOVE_DOWN)
 		movement(game, game->player.y + 1, game->player.x, 'S');
-	if (keycode == 0)
+	if (keycode == MOVE_LEFT)
 		movement(game, game->player.y, game->player.x - 1, 'A');
-	if (keycode == 2)
+	if (keycode == MOVE_RIGHT)
 		movement(game, game->player.y, game->player.x + 1, 'D');
-	printf("I like turtles!\n");
 	return (0);
 }

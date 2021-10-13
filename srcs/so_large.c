@@ -6,7 +6,7 @@
 /*   By: malmeida <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/29 13:15:45 by malmeida          #+#    #+#             */
-/*   Updated: 2021/10/13 14:19:10 by malmeida         ###   ########.fr       */
+/*   Updated: 2021/10/13 16:33:57 by malmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	start_game(t_game *game)
 	int	j;
 	int	player;
 
+	game->player.allow_movement = 1;
 	game->player.collectibles = 0;
 	player = 0;
 	i = 0;
@@ -47,18 +48,12 @@ int	exit_game(t_game *game)
 	i = 0;
 	while (game->map.matrix[i] && i < game->map.height)
 	{
-		free(game->map.matrix[i]);
+		if (game->map.matrix[i])
+			free(game->map.matrix[i]);
 		i++;
 	}
-	free(game->map.matrix);
-	mlx_destroy_image(game->mlx.mlx, game->assets.floor);
-	mlx_destroy_image(game->mlx.mlx, game->assets.wall);
-	mlx_destroy_image(game->mlx.mlx, game->assets.exit);
-	mlx_destroy_image(game->mlx.mlx, game->assets.collectible);
-	mlx_destroy_image(game->mlx.mlx, game->assets.player_front);
-	mlx_destroy_image(game->mlx.mlx, game->assets.player_back);
-	mlx_destroy_image(game->mlx.mlx, game->assets.player_left);
-	mlx_destroy_image(game->mlx.mlx, game->assets.player_back);
+	if (game->map.matrix)
+		free(game->map.matrix);
 	mlx_destroy_window(game->mlx.mlx, game->mlx.mlx_win);
 	exit (0);
 }
@@ -69,6 +64,7 @@ int	main(int argc, char **argv)
 
 	if (argc != 2)
 		return (0);
+	game.player.moves = 0;
 	map_parsing(&game, argv[1]);
 	if (map_validation(game))
 		exit_game(&game);

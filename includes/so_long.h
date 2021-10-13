@@ -6,7 +6,7 @@
 /*   By: malmeida <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/01 13:54:21 by malmeida          #+#    #+#             */
-/*   Updated: 2021/10/13 14:22:32 by malmeida         ###   ########.fr       */
+/*   Updated: 2021/10/13 16:03:58 by malmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,15 @@
 # include <stdio.h>
 # include "../libft/includes/libft.h"
 
-#define BUFFER_SIZE 1
+# define BUFFER_SIZE 1
 
-typedef	struct	s_assets {
+# define ESC		53
+# define MOVE_UP	13
+# define MOVE_DOWN	1
+# define MOVE_RIGHT	2
+# define MOVE_LEFT	0
+
+typedef struct s_assets {
 	void		*floor;
 	void		*wall;
 	void		*exit;
@@ -35,25 +41,26 @@ typedef	struct	s_assets {
 	void		*player_right;
 }				t_assets;
 
-typedef	struct	s_mlx {
+typedef struct s_mlx {
 	void		*mlx;
 	void		*mlx_win;
 }				t_mlx;
 
-typedef	struct	s_map {
+typedef struct s_map {
 	char		**matrix;
 	int			height;
 	int			length;
 }				t_map;
 
-typedef struct	s_player {
+typedef struct s_player {
 	int			x;
 	int			y;
 	int			moves;
 	int			collectibles;
+	int			allow_movement;
 }				t_player;
 
-typedef	struct	s_game {
+typedef struct s_game {
 	t_mlx		mlx;
 	t_assets	assets;
 	t_map		map;
