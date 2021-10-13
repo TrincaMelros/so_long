@@ -9,7 +9,7 @@ The objective is to collect all the jars. When you do so, you can step onto the 
 To play, clone the repository and compile with make. You need to feed the map as an argument to the program. Some are included in the ./images/maps/ folder.
 
 ```
-https://github.com/TrincaMelros/so_long
+git clone https://github.com/TrincaMelros/so_long
 
 make
 
