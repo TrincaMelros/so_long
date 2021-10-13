@@ -6,12 +6,14 @@ So_long is a 2D game made in C. It uses the minilibx library, a simple graphics 
 
 The objective is to collect all the jars. When you do so, you can step onto the portal to end the game. The character can be controlled with WASD, and ESC can be used to close the window.
 
-To play, clone the repository and compile with make.
+To play, clone the repository and compile with make. You need to feed the map as an argument to the program. Some are included in the ./images/maps/ folder.
 
 ```
 https://github.com/TrincaMelros/so_long
 
 make
+
+./so_long "./images/maps/map.ber"
 ```
 
 # Acknowledgments
