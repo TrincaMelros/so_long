@@ -6,13 +6,13 @@
 /*   By: malmeida <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/01 13:47:33 by malmeida          #+#    #+#             */
-/*   Updated: 2021/10/12 13:52:42 by malmeida         ###   ########.fr       */
+/*   Updated: 2021/10/13 13:12:07 by malmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
 
-int	get_map_height(char *filename)
+static int	get_map_height(char *filename)
 {
 	int		fd;
 	int		size;
@@ -26,7 +26,7 @@ int	get_map_height(char *filename)
 	return (size);
 }
 
-int	get_map_length(char *filename)
+static int	get_map_length(char *filename)
 {
 	int		fd;
 	int		i;
@@ -47,7 +47,7 @@ int	get_map_length(char *filename)
 	return (j);
 }
 
-void	map_parser(char *filename, char ***map)
+static void	map_parser(char *filename, char ***map)
 {
 	int		fd;
 	int		j;
@@ -63,15 +63,37 @@ void	map_parser(char *filename, char ***map)
 	close(fd);
 }
 
-void	free_map(char ***map)
+static void	fix_multiple_player(t_game *game)
 {
 	int	i;
+	int	j;
+	int	playa;
 
+	playa = 0;
 	i = 0;
-	while ((*map)[i])
+	while (game->map.matrix[i] && i < game->map.height)
 	{
-		free((*map)[i]);
+		j = 0;
+		while (game->map.matrix[i][j])
+		{
+			if (game->map.matrix[i][j] == 'P')
+			{
+				if (playa == 0)
+					playa = 1;
+				else if (playa == 1)
+					game->map.matrix[i][j] = '0';
+			}
+			j++;
+		}
 		i++;
 	}
-	free(*map);
+}
+
+void	map_parsing(t_game *game, char *filename)
+{
+	game->map.height = get_map_height(filename);
+	game->map.length = get_map_length(filename);
+	game->map.matrix = malloc(sizeof(char *) * game->map.height);
+	map_parser(filename, &(game->map.matrix));
+	fix_multiple_player(game);
 }

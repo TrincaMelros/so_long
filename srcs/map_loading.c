@@ -6,7 +6,7 @@
 /*   By: malmeida <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/11 14:34:45 by malmeida          #+#    #+#             */
-/*   Updated: 2021/10/12 15:05:49 by malmeida         ###   ########.fr       */
+/*   Updated: 2021/10/13 13:23:53 by malmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,7 @@ static void	load_assets(t_game *game)
 {
 	int	i;
 	int	j;
-	int	player_count;
 
-	player_count = 0;
 	i = 0;
 	while (game->map.matrix[i] && i < game->map.height)
 	{
@@ -31,7 +29,7 @@ static void	load_assets(t_game *game)
 			if (game->map.matrix[i][j] == 'C')
 				mlx_put_image_to_window(game->mlx.mlx, game->mlx.mlx_win, \
 						game->assets.collectible, j * 50, i * 50);
-			if (game->map.matrix[i][j] == 'P' && player_count == 0)
+			if (game->map.matrix[i][j] == 'P')
 				mlx_put_image_to_window(game->mlx.mlx, game->mlx.mlx_win, \
 						game->assets.player_front, j * 50, i * 50);
 			j++;
