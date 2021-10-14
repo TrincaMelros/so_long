@@ -6,7 +6,7 @@
 /*   By: malmeida <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/29 13:15:45 by malmeida          #+#    #+#             */
-/*   Updated: 2021/10/13 16:33:57 by malmeida         ###   ########.fr       */
+/*   Updated: 2021/10/14 12:33:21 by malmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ int	exit_game(t_game *game)
 	}
 	if (game->map.matrix)
 		free(game->map.matrix);
-	mlx_destroy_window(game->mlx.mlx, game->mlx.mlx_win);
 	exit (0);
 }
 
