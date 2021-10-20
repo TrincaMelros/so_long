@@ -6,9 +6,11 @@
 #    By: malmeida <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/08 12:30:32 by malmeida          #+#    #+#              #
-#    Updated: 2021/10/08 12:45:19 by malmeida         ###   ########.fr        #
+#    Updated: 2021/10/20 10:37:05 by malmeida         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
+MAKEFLAGS	+=	--quiet
 
 			# Library Name #
 NAME		=

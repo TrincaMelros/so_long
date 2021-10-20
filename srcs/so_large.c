@@ -6,7 +6,7 @@
 /*   By: malmeida <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/29 13:15:45 by malmeida          #+#    #+#             */
-/*   Updated: 2021/10/14 12:33:21 by malmeida         ###   ########.fr       */
+/*   Updated: 2021/10/20 10:57:05 by malmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	start_game(t_game *game)
 	}
 }
 
-int	exit_game(t_game *game)
+int	exit_game(t_game *game, int k)
 {
 	int	i;
 
@@ -54,6 +54,8 @@ int	exit_game(t_game *game)
 	}
 	if (game->map.matrix)
 		free(game->map.matrix);
+	if (k)
+		mlx_destroy_window(game->mlx.mlx, game->mlx.mlx_win);
 	exit (0);
 }
 
@@ -66,7 +68,7 @@ int	main(int argc, char **argv)
 	game.player.moves = 0;
 	map_parsing(&game, argv[1]);
 	if (map_validation(game))
-		exit_game(&game);
+		exit_game(&game, 0);
 	start_game(&game);
 	map_loading(&game);
 	mlx_hook(game.mlx.mlx_win, 17, (1L << 17), exit_game, &game);

@@ -6,7 +6,7 @@
 /*   By: malmeida <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/01 13:54:21 by malmeida          #+#    #+#             */
-/*   Updated: 2021/10/13 16:03:58 by malmeida         ###   ########.fr       */
+/*   Updated: 2021/10/20 11:04:26 by malmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,6 @@ int		map_validation(t_game game);
 		/* Movements */
 int		key_hook(int keycode, t_game *game);
 
-int		exit_game(t_game *game);
+int		exit_game(t_game *game, int k);
 
 #endif

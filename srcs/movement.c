@@ -6,7 +6,7 @@
 /*   By: malmeida <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 13:24:05 by malmeida          #+#    #+#             */
-/*   Updated: 2021/10/13 16:03:55 by malmeida         ###   ########.fr       */
+/*   Updated: 2021/10/20 11:06:46 by malmeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,9 @@ static void	end_game(t_game *game, int yy, int xx)
 	mlx_put_image_to_window(game->mlx.mlx, game->mlx.mlx_win, \
 			game->assets.player_front, xx * 50, yy * 50);
 	game->player.allow_movement = 0;
+	mlx_string_put(game->mlx.mlx, game->mlx.mlx_win, \
+			((game->map.length * 50) / 2) - 100, ((game->map.height * 50) / 2) \
+			, 0x00FF0000, "!!YOU WIN BOSS!! (PRESS ESC TO EXIT)");
 }
 
 static void	movement(t_game *game, int new_y, int new_x, char move)
@@ -85,7 +88,7 @@ static void	movement(t_game *game, int new_y, int new_x, char move)
 int	key_hook(int keycode, t_game *game)
 {
 	if (keycode == ESC)
-		exit_game(game);
+		exit_game(game, 1);
 	if (game->player.allow_movement == 0)
 		return (0);
 	if (keycode == MOVE_UP)
